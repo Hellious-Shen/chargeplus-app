@@ -7,27 +7,6 @@ from datetime import datetime
 from io import BytesIO
 import streamlit as st
 
-# 🔐 Login using st.secrets
-def login():
-    st.title("🔒 Charge+ Receipt App Login")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
-
-    if st.button("Login"):
-        if username in st.secrets["users"] and st.secrets["users"][username] == password:
-            st.session_state["authenticated"] = True
-            st.experimental_rerun()
-        else:
-            st.error("❌ Invalid username or password")
-
-# 🚪 Check login
-if "authenticated" not in st.session_state:
-    st.session_state["authenticated"] = False
-
-if not st.session_state["authenticated"]:
-    login()
-    st.stop()
-
 def extract_chargeplus_data_from_pdf(file):
     doc = fitz.open(stream=file.read(), filetype="pdf")
     text = ""
